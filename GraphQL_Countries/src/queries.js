@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_COUNTRY_DATA = gql`
-  query Query($countryCode: ID!) {
+  query QueryCountry($countryCode: ID!) {
     country(code: $countryCode) {
       name
       native

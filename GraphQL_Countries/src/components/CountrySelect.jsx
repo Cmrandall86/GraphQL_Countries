@@ -3,7 +3,7 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-export default function AutocompleteText({ options, setCountry, val }) {
+export default function CountrySelect({ options, setCountry, val }) {
   return (
     <Autocomplete
       disablePortal

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import AutocompleteText from "./components/AutocompleteText";
+import AutocompleteText from "./components/CountrySelect";
 import { GET_COUNTRY_CODES, GET_COUNTRY_DATA } from "./queries";
 import styled from "styled-components";
 
@@ -14,14 +14,16 @@ export default function App() {
   } = useQuery(GET_COUNTRY_DATA, {
     variables: { countryCode: country },
   });
+
   const { data: countryCode, loading: countryCodeLoading, error: countryCodeError } = useQuery(GET_COUNTRY_CODES);
   const countryCodesData = countryCode?.countries;
   const countriesWithLabels = countryCodesData?.map((n) => {
     return { label: n.name, code: n.code };
   });
-  if (countryDataLoading) return "Loading...";
+
+  // if (countryDataLoading) return "Loading...";
   if (countryCodeLoading) return "Loading country data...";
-  if (countryDataError) return <pre>{countryDataError.message}</pre>;
+  if (countryDataError) return <pre>{countryDataError.message} make a component</pre>;
   if (countryCodeError) return <pre>{countryCodeError.message}</pre>;
 
   if (!countryData || !countryData.country) {
@@ -35,6 +37,7 @@ export default function App() {
         <AutocompleteText options={countriesWithLabels} setCountry={setCountry} val={countryData.country.name} />
       </LS>
       <RS>
+        {countryDataLoading ? "Loading... get a spinner" : 'make a component here'}
         <PageCountryTitle>{countryData.country.name}</PageCountryTitle>
         <p>Capital city: {countryData.country.capital}</p>
         <p>Native language: {countryData.country.native}</p>
