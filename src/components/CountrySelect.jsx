@@ -8,7 +8,7 @@ export default function CountrySelect({ options, setCountry, val }) {
     <Autocomplete
       disablePortal
       freeSolo
-      id="combo-box-demo"
+      id="auto-complete-country"
       options={options}
       value={val || ""}
       sx={{ width: 300 }}
