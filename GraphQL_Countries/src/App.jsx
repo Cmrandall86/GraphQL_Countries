@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import AutocompleteText from "./components/CountrySelect";
 import { GET_COUNTRY_CODES, GET_COUNTRY_DATA } from "./queries";
 import styled from "styled-components";
+import LoadingComponent from "./components/LoadingComponent";
+import ErrorComponent from "./components/ErrorComponent";
+import CountryData from "./components/CountryData";
 
 export default function App() {
   const [country, setCountry] = useState("US");
@@ -21,13 +24,12 @@ export default function App() {
     return { label: n.name, code: n.code };
   });
 
-  // if (countryDataLoading) return "Loading...";
-  if (countryCodeLoading) return "Loading country data...";
-  if (countryDataError) return <pre>{countryDataError.message} make a component</pre>;
-  if (countryCodeError) return <pre>{countryCodeError.message}</pre>;
+  if (countryCodeLoading) return <LoadingComponent />;
+  if (countryDataError) return <ErrorComponent errorMessage={countryDataError.message} />;
+  if (countryCodeError) return <ErrorComponent errorMessage={countryCodeError.message} />;
 
   if (!countryData || !countryData.country) {
-    return <p>No data available</p>;
+    return <LoadingComponent />;
   }
 
   return (
@@ -36,21 +38,7 @@ export default function App() {
         <SubTitle>Select a country:</SubTitle>
         <AutocompleteText options={countriesWithLabels} setCountry={setCountry} val={countryData.country.name} />
       </LS>
-      <RS>
-        {countryDataLoading ? "Loading... get a spinner" : 'make a component here'}
-        <PageCountryTitle>{countryData.country.name}</PageCountryTitle>
-        <p>Capital city: {countryData.country.capital}</p>
-        <p>Native language: {countryData.country.native}</p>
-        <p>Emoji: {countryData.country.emoji}</p>
-        <p>Currency: {countryData.country.currency}</p>
-
-        <h2>Languages:</h2>
-        <ul>
-          {countryData.country.languages.map((language) => (
-            <li key={language.code}>{language.name}</li>
-          ))}
-        </ul>
-      </RS>
+      <RS>{countryDataLoading ? <LoadingComponent /> : <CountryData countryData={countryData} />}</RS>
     </PageWrap>
   );
 }
@@ -66,8 +54,6 @@ const PageWrap = styled.main`
     gap: 40px;
   }
 `;
-
-const PageCountryTitle = styled.h1``;
 
 const SubTitle = styled.h2``;
 

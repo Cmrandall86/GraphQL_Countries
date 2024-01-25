@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -12,7 +12,7 @@ export default function CountrySelect({ options, setCountry, val }) {
       options={options}
       value={val || ""}
       sx={{ width: 300 }}
-      onChange={(event, selectedOption) => {
+      onChange={(_, selectedOption) => {
         if (selectedOption) {
           setCountry(selectedOption.code);
         }
@@ -21,3 +21,9 @@ export default function CountrySelect({ options, setCountry, val }) {
     />
   );
 }
+
+CountrySelect.propTypes = {
+  options: PropTypes.string,
+  setCountry: PropTypes.func,
+  val: PropTypes.string,
+};
