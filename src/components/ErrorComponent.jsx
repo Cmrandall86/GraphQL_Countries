@@ -1,13 +1,9 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
-export default function ErrorComponent({errorMessage}) {
-  return (
-    <div>
-        {errorMessage}
-    </div>
-  )
+export default function ErrorComponent({ errorMessage }) {
+  return <div>{errorMessage}</div>;
 }
 
 ErrorComponent.propTypes = {
-    errorMessage: PropTypes.string
-}
+  errorMessage: PropTypes.string,
+};
